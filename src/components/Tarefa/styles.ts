@@ -1,18 +1,40 @@
 import styled from 'styled-components'
 import variaveis from '../../styles/variaveis'
 
-type TagProps = {
-  prioridade?: string
-  status?: string
-}
+import * as enums from '../../utils/enums/tarefa'
 
+// type TagProps = {
+//   prioridade?: string
+//   status?: string
+// }
+
+// function retornaCorDefundo(props: TagProps): string {
+//   if ('status' in props) {
+//     if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
+//     if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
+//   } else if ('prioridade' in props) {
+//     if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
+//     if (props.prioridade === enums.Prioridade.IMPORTANTE)
+//       return variaveis.amarelo2
+//   }
+//   return '#ccc'
+// }
+
+//Fazendo o código acima utilizando ENUMS.
+
+type TagProps = {
+  prioridade?: enums.Prioridade
+  status?: enums.Status
+  parametro: 'status' | 'prioridade'
+}
 function retornaCorDefundo(props: TagProps): string {
-  if ('status' in props) {
-    if (props.status === 'pendente') return variaveis.amarelo
-    if (props.status === 'concluída') return variaveis.verde
-  } else if ('prioridade' in props) {
-    if (props.prioridade === 'urgente') return variaveis.vermelho
-    if (props.prioridade === 'importante') return variaveis.amarelo2
+  if (props.parametro === 'prioridade') {
+    if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
+    if (props.prioridade === enums.Prioridade.IMPORTANTE)
+      return variaveis.amarelo2
+  } else {
+    if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
+    if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
   }
   return '#ccc'
 }
