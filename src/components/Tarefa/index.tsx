@@ -2,15 +2,16 @@ import { useState } from 'react'
 import * as S from './styles'
 
 import * as enums from '../../utils/enums/tarefa'
+import { useDispatch } from 'react-redux'
 
-type Props = {
-  titulo: string
-  prioridade: enums.Prioridade
-  status: enums.Status
-  descricao: string
-}
+import { remover } from '../../store/reducers/tarefas'
+import TarefaClass from '../../models/tarefa'
 
-const Tarefa = ({ descricao, prioridade, status, titulo }: Props) => {
+type Props = TarefaClass
+
+const Tarefa = ({ descricao, prioridade, status, titulo, id }: Props) => {
+  const dispatch = useDispatch()
+
   const [estaEditando, setEstaEditando] = useState(false)
 
   return (
@@ -35,7 +36,9 @@ const Tarefa = ({ descricao, prioridade, status, titulo }: Props) => {
         ) : (
           <>
             <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
-            <S.BotaoCancelarRemover>Remover</S.BotaoCancelarRemover>
+            <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
+              Remover
+            </S.BotaoCancelarRemover>
           </>
         )}
       </S.BarraAcoes>
