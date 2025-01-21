@@ -6,7 +6,7 @@ const Home = () => {
   return (
     // eslint-disable-next-line prettier/prettier
     <>
-      <BarraLateral />
+      <BarraLateral mostrarFiltros />
       <ListaDeTarefas />
       <BotaoAdicionar />
     </>

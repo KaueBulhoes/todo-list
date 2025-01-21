@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { remover, editar, alteraStatus } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/tarefa'
-import { BotaoSalvar } from '../../styles'
+import { Botao, BotaoSalvar } from '../../styles'
 
 import * as enums from '../../utils/enums/tarefa'
 
@@ -94,7 +94,7 @@ const Tarefa = ({
           </>
         ) : (
           <>
-            <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
+            <Botao onClick={() => setEstaEditando(true)}>Editar</Botao>
             <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
               Remover
             </S.BotaoCancelarRemover>
