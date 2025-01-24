@@ -1,44 +1,7 @@
 import styled from 'styled-components'
 import variaveis from '../../styles/variaveis'
 
-import * as enums from '../../utils/enums/tarefa'
 import { Botao } from '../../styles'
-
-// type TagProps = {
-//   prioridade?: string
-//   status?: string
-// }
-
-// function retornaCorDefundo(props: TagProps): string {
-//   if ('status' in props) {
-//     if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
-//     if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
-//   } else if ('prioridade' in props) {
-//     if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
-//     if (props.prioridade === enums.Prioridade.IMPORTANTE)
-//       return variaveis.amarelo2
-//   }
-//   return '#ccc'
-// }
-
-//Fazendo o código acima utilizando ENUMS.
-
-type TagProps = {
-  prioridade?: enums.Prioridade
-  status?: enums.Status
-  parametro: 'status' | 'prioridade'
-}
-function retornaCorDefundo(props: TagProps): string {
-  if (props.parametro === 'prioridade') {
-    if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
-    if (props.prioridade === enums.Prioridade.IMPORTANTE)
-      return variaveis.amarelo2
-  } else {
-    if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
-    if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
-  }
-  return '#ccc'
-}
 
 export const Card = styled.div`
   background-color: #fcfcfc;
@@ -58,17 +21,6 @@ export const Titulo = styled.h3`
   font-size: 18px;
   font-weight: bold;
   margin-left: 8px;
-`
-
-export const Tag = styled.span<TagProps>`
-  padding: 4px 8px;
-  color: #fff;
-  font-size: 10px;
-  font-weight: bold;
-  background-color: ${(props) => retornaCorDefundo(props)};
-  border-radius: 8px;
-  margin-right: 16px;
-  display: inline-block;
 `
 
 export const Descricao = styled.textarea`

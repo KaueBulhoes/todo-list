@@ -1,86 +1,84 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as S from './styles'
 
 import { useDispatch } from 'react-redux'
 
-import { remover, editar, alteraStatus } from '../../store/reducers/tarefas'
-import TarefaClass from '../../models/tarefa'
+import { remover, editar } from '../../store/reducers/tarefas'
+import AgendaClass from '../../models/agenda'
 import { Botao, BotaoSalvar } from '../../styles'
 
-import * as enums from '../../utils/enums/tarefa'
+type Props = AgendaClass
 
-type Props = TarefaClass
-
-const Tarefa = ({
-  descricao: descricaoOriginal,
-  prioridade,
-  status,
-  titulo,
-  id
-}: Props) => {
+const Tarefa = ({ id, nome, email, telefone }: Props) => {
   const dispatch = useDispatch()
 
   const [estaEditando, setEstaEditando] = useState(false)
-  const [descricao, setDescricao] = useState('')
+  const [nomeEditado, setNomeEditado] = useState(nome)
+  const [emailEditado, setEmailEditado] = useState(email)
+  const [telefoneEditado, setTelefoneEditado] = useState(telefone)
 
   useEffect(() => {
-    if (descricaoOriginal.length > 0) {
-      setDescricao(descricaoOriginal)
-    }
-  }, [descricaoOriginal])
+    setNomeEditado(nome)
+    setEmailEditado(email)
+    setTelefoneEditado(telefone)
+  }, [nome, email, telefone])
 
   function cancelarEdicao() {
     setEstaEditando(false)
-    setDescricao(descricaoOriginal)
-  }
-
-  function alteraStatusTarefa(evento: ChangeEvent<HTMLInputElement>) {
-    dispatch(
-      alteraStatus({
-        id,
-        finalizado: evento.target.checked
-      })
-    )
+    setNomeEditado(nome)
+    setEmailEditado(email)
+    setTelefoneEditado(telefone)
   }
 
   return (
     <S.Card>
-      <label htmlFor={titulo}>
-        <input
-          type="checkbox"
-          id={titulo}
-          checked={status === enums.Status.CONCLUIDA}
-          onChange={alteraStatusTarefa}
-        />
-        <S.Titulo>
-          {estaEditando && <em>Editando: </em>}
-          {titulo}
-        </S.Titulo>
-      </label>
-      <S.Tag parametro="prioridade" prioridade={prioridade}>
-        {prioridade}
-      </S.Tag>
-      <S.Tag parametro="status" status={status}>
-        {status}
-      </S.Tag>
-      <S.Descricao
-        disabled={!estaEditando}
-        value={descricao}
-        onChange={(evento) => setDescricao(evento.target.value)}
-      />
+      <S.Titulo>
+        {estaEditando && <em>Editando: </em>}
+        {nome}
+      </S.Titulo>
+
+      {estaEditando ? (
+        <>
+          <input
+            type="text"
+            value={nomeEditado}
+            onChange={(evento) => setNomeEditado(evento.target.value)}
+            placeholder="Nome"
+          />
+          <input
+            type="email"
+            value={emailEditado}
+            onChange={(evento) => setEmailEditado(evento.target.value)}
+            placeholder="Email"
+          />
+          <input
+            type="text"
+            value={telefoneEditado}
+            onChange={(evento) =>
+              setTelefoneEditado(Number(evento.target.value))
+            }
+            placeholder="Telefone"
+          />
+        </>
+      ) : (
+        <>
+          <p>Nome: {nome}</p>
+          <p>Email: {email}</p>
+          <p>Telefone: {telefone}</p>
+        </>
+      )}
+
       <S.BarraAcoes>
         {estaEditando ? (
-          // Para retornar mais de uma tag, deve-se colocar dentro do fragmento, pois é como se tivesse retornando apenas o fragmento.
           <>
             <BotaoSalvar
               onClick={() => {
                 dispatch(
                   editar({
-                    descricao,
-                    prioridade,
-                    status,
-                    titulo,
-                    id
+                    id,
+                    nome: nomeEditado,
+                    email: emailEditado,
+                    telefone: telefoneEditado
                   })
                 )
                 setEstaEditando(false)
