@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { BotaoSalvar, MainContainer, Titulo } from '../../styles'
+import { BotaoSalvar, BotaoVoltar, MainContainer, Titulo } from '../../styles'
 import { Campo } from '../../styles'
 import { Form } from './styles'
 import { cadastrar } from '../../store/reducers/tarefas'
@@ -51,6 +51,9 @@ const Formulario = () => {
           placeholder="telefone"
         />
         <BotaoSalvar type="submit">Cadastrar</BotaoSalvar>
+        <BotaoVoltar type="button" onClick={() => navigate('/')}>
+          Voltar para agenda
+        </BotaoVoltar>
       </Form>
     </MainContainer>
   )

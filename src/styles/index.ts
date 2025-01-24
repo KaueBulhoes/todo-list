@@ -57,4 +57,8 @@ export const BotaoSalvar = styled(Botao)`
   background-color: ${variaveis.verde};
 `
 
+export const BotaoVoltar = styled(Botao)`
+  background-color: #2f3640;
+`
+
 export default EstiloGlobal
